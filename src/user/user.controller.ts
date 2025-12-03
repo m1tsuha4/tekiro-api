@@ -17,7 +17,7 @@ import {
   ApiOkResponse,
 } from '@nestjs/swagger';
 import { ResponseUserDto } from './dto/response-user.dto';
-import { ZodValidationPipe } from '../../src/common/pipes/zod-validation.pipe';
+import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe';
 
 @Controller('user')
 export class UserController {
