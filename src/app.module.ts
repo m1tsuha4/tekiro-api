@@ -12,7 +12,8 @@ import { UserModule } from './user/user.module';
       envFilePath: [`.env.${process.env.NODE_ENV || 'development'}`, '.env'],
     }),
     PrismaModule,
-    UserModule],
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,8 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, CreateUserSchema } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiBody, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { ZodValidationPipe } from '../../src/common/pipes/zod-validation.pipe';
 
@@ -25,7 +38,9 @@ export class UserController {
     description: 'User created successfully',
     type: ResponseUserDto,
   })
-  create(@Body(new ZodValidationPipe(CreateUserSchema)) createUserDto: CreateUserDto) {
+  create(
+    @Body(new ZodValidationPipe(CreateUserSchema)) createUserDto: CreateUserDto,
+  ) {
     return this.userService.create(createUserDto);
   }
 
