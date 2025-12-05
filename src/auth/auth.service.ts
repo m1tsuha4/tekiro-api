@@ -10,10 +10,10 @@ import { UnauthorizedException } from '@nestjs/common';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly prismaService: PrismaService,
+    private readonly prisma: PrismaService,
   ) {}
   async login(loginDto: LoginDto) {
-    const user = await this.prismaService.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: {
         email: loginDto.email,
         deletedAt: null,
@@ -43,7 +43,7 @@ export class AuthService {
     };
   }
   async logout(userId: string, token: string) {
-    await this.prismaService.tokenBlacklist.create({
+    await this.prisma.tokenBlacklist.create({
       data: {
         token,
         userId,

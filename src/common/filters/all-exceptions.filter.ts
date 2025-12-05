@@ -32,12 +32,15 @@ export class AllExceptionsFilter implements ExceptionFilter {
         message: 'Validation error',
         errors,
       };
-    }
-    else if (exception instanceof HttpException) {
+    } else if (exception instanceof HttpException) {
       status = exception.getStatus();
       const res = exception.getResponse();
 
-      if (typeof res === 'object' && res !== null && 'success' in (res as any)) {
+      if (
+        typeof res === 'object' &&
+        res !== null &&
+        'success' in (res as any)
+      ) {
         body = res;
       } else {
         const message =
@@ -49,8 +52,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
           'HTTP_EXCEPTION',
         );
       }
-    }
-    else {
+    } else {
       console.error('Unexpected error:', exception);
       body = fail('Internal server error', 'INTERNAL_SERVER_ERROR');
     }
