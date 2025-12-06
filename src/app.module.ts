@@ -11,6 +11,7 @@ import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { GalleryModule } from './gallery/gallery.module';
 import { InstagramModule } from './instagram/instagram.module';
+import { CordlessModule } from './cordless/cordless.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { InstagramModule } from './instagram/instagram.module';
     ProductModule,
     GalleryModule,
     InstagramModule,
+    CordlessModule,
   ],
   controllers: [AppController],
   providers: [
