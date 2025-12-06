@@ -48,6 +48,27 @@ export class ProductService {
     return existingProduct;
   }
 
+  async findLatest() {
+    const latestProduct = await this.prisma.product.findMany({
+      where: {
+        deletedAt: null,
+      },
+      select: {
+        id: true,
+        name: true,
+        images: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 16,
+    })
+    if (latestProduct.length === 0) {
+      throw new NotFoundException('Product not found');
+    }
+    return latestProduct;
+  }
+
   async findOne(id: string) {
     const existingProduct = await this.prisma.product.findUnique({
       where: {
@@ -70,6 +91,25 @@ export class ProductService {
       },
     });
     if (!existingProduct) {
+      throw new NotFoundException('Product not found');
+    }
+    return existingProduct;
+  }
+
+  async findCategory(categoryId: string) {
+    const existingProduct = await this.prisma.product.findMany({
+      where: {
+        categoryId,
+        deletedAt: null,
+      },
+      select: {
+        id: true,
+        name: true,
+        images: true,
+      },
+      take: 10
+    });
+    if (existingProduct.length === 0) {
       throw new NotFoundException('Product not found');
     }
     return existingProduct;

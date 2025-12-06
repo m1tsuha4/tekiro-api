@@ -44,6 +44,16 @@ export class ProductController {
     return this.productService.findAll();
   }
 
+  @Get('latest')
+  findLatest() {
+    return this.productService.findLatest();
+  }
+
+  @Get(':categoryId')
+  findCategory(@Param('categoryId') categoryId: string) {
+    return this.productService.findCategory(categoryId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productService.findOne(id);
