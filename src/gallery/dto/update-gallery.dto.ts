@@ -1,4 +1,6 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateGalleryDto } from './create-gallery.dto';
+import { createZodDto } from '@anatine/zod-nestjs';
+import { CreateGallerySchema } from './create-gallery.dto';
 
-export class UpdateGalleryDto extends PartialType(CreateGalleryDto) {}
+export const UpdateGallerySchema = CreateGallerySchema.partial();
+
+export class UpdateGalleryDto extends createZodDto(UpdateGallerySchema) {}

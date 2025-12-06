@@ -8,6 +8,7 @@ import {
 } from '@nestjs/swagger';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { join } from 'path';
+import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -19,9 +20,7 @@ async function bootstrap() {
   });
 
   app.useGlobalFilters(new AllExceptionsFilter());
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
-    prefix: '/uploads/',
-  });
+   app.use('/uploads', express.static(join(process.cwd(), 'uploads')));
 
   const config = new DocumentBuilder()
     .setTitle('Tekiro API')
