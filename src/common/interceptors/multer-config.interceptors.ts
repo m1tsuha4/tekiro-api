@@ -44,10 +44,7 @@ export function UploadImageInterceptor(folderName: string = '') {
   );
 }
 
-export function UploadImagesInterceptor(
-  folderName: string,
-  maxCount = 3,
-) {
+export function UploadImagesInterceptor(folderName: string, maxCount = 3) {
   const folderPath = `./uploads/${folderName}`;
   ensureDirExists(folderPath);
 

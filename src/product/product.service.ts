@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -9,7 +13,10 @@ import { existsSync, unlinkSync } from 'fs';
 export class ProductService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createProductDto: CreateProductDto, file?: Express.Multer.File[]) {
+  async create(
+    createProductDto: CreateProductDto,
+    file?: Express.Multer.File[],
+  ) {
     if (!file || file.length === 0) {
       throw new BadRequestException('Atleast One Image is Required');
     }
@@ -62,7 +69,7 @@ export class ProductService {
         createdAt: 'desc',
       },
       take: 16,
-    })
+    });
     if (latestProduct.length === 0) {
       throw new NotFoundException('Product not found');
     }
@@ -107,7 +114,7 @@ export class ProductService {
         name: true,
         images: true,
       },
-      take: 10
+      take: 10,
     });
     if (existingProduct.length === 0) {
       throw new NotFoundException('Product not found');
@@ -115,7 +122,11 @@ export class ProductService {
     return existingProduct;
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto, files?: Express.Multer.File[]) {
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+    files?: Express.Multer.File[],
+  ) {
     const existingProduct = await this.prisma.product.findFirst({
       where: {
         id,
@@ -127,10 +138,14 @@ export class ProductService {
       throw new NotFoundException('Product not found');
     }
 
-    const { file: _ignoreFileField, files: _ignoreFilesField, ...rest } = updateProductDto as any;
+    const {
+      file: _ignoreFileField,
+      files: _ignoreFilesField,
+      ...rest
+    } = updateProductDto as any;
     const updateData: any = { ...rest };
     const uploadRoot = join(process.cwd(), 'uploads');
-    
+
     if (files && files.length > 0) {
       const newImages = files.map(
         (file) => `/uploads/product/${file.filename}`,
@@ -139,7 +154,7 @@ export class ProductService {
 
       if (existingProduct.images && existingProduct.images.length > 0) {
         for (const img of existingProduct.images) {
-          const filename = basename(img); 
+          const filename = basename(img);
           const oldFilePath = join(uploadRoot, 'product', filename);
           try {
             if (existsSync(oldFilePath)) {
@@ -173,7 +188,7 @@ export class ProductService {
     const uploadRoot = join(process.cwd(), 'uploads');
     if (existingProduct.images && existingProduct.images.length > 0) {
       for (const img of existingProduct.images) {
-        const filename = basename(img); 
+        const filename = basename(img);
         const oldFilePath = join(uploadRoot, 'product', filename);
         try {
           if (existsSync(oldFilePath)) {

@@ -93,7 +93,7 @@ export class CategoryService {
     const updateData: any = { ...rest };
     const uploadRoot = join(process.cwd(), 'uploads');
     let image: string | undefined;
-    
+
     if (file) {
       image = `/uploads/category/${file.filename}`;
       updateData.image = image;

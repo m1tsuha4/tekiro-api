@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateGalleryDto } from './dto/create-gallery.dto';
 import { UpdateGalleryDto } from './dto/update-gallery.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -8,12 +12,12 @@ import { existsSync, unlinkSync } from 'fs';
 @Injectable()
 export class GalleryService {
   constructor(private readonly prisma: PrismaService) {}
-  
+
   async create(createGalleryDto: CreateGalleryDto, file?: Express.Multer.File) {
     if (!file) {
       throw new BadRequestException('File is required');
     }
-    
+
     const image = `/uploads/gallery/${file.filename}`;
     return this.prisma.gallery.create({
       data: {
@@ -49,7 +53,11 @@ export class GalleryService {
     return existingGallery;
   }
 
-  async update(id: string, updateGalleryDto: UpdateGalleryDto, file?: Express.Multer.File) {
+  async update(
+    id: string,
+    updateGalleryDto: UpdateGalleryDto,
+    file?: Express.Multer.File,
+  ) {
     const existingGallery = await this.prisma.gallery.findUnique({
       where: {
         id: id,
@@ -62,7 +70,7 @@ export class GalleryService {
     const updateData: any = { ...rest };
     const uploadRoot = join(process.cwd(), 'uploads');
     let image: string | undefined;
-    
+
     if (file) {
       image = `/uploads/gallery/${file.filename}`;
       updateData.image = image;

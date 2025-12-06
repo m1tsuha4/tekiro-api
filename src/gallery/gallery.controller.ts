@@ -1,7 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UploadedFile } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  UploadedFile,
+} from '@nestjs/common';
 import { GalleryService } from './gallery.service';
-import { CreateGalleryDto, CreateGallerySchema } from './dto/create-gallery.dto';
-import { UpdateGalleryDto, UpdateGallerySchema } from './dto/update-gallery.dto';
+import {
+  CreateGalleryDto,
+  CreateGallerySchema,
+} from './dto/create-gallery.dto';
+import {
+  UpdateGalleryDto,
+  UpdateGallerySchema,
+} from './dto/update-gallery.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-guard.auth';
 import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe';
@@ -25,7 +41,11 @@ export class GalleryController {
       },
     },
   })
-  create(@Body(new ZodValidationPipe(CreateGallerySchema)) createGalleryDto: CreateGalleryDto, @UploadedFile() file: Express.Multer.File) {
+  create(
+    @Body(new ZodValidationPipe(CreateGallerySchema))
+    createGalleryDto: CreateGalleryDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     return this.galleryService.create(createGalleryDto, file);
   }
 
@@ -53,7 +73,12 @@ export class GalleryController {
   })
   @Patch(':id')
   @UploadImageInterceptor('gallery')
-  update(@Param('id') id: string, @Body(new ZodValidationPipe(UpdateGallerySchema)) updateGalleryDto: UpdateGalleryDto, @UploadedFile() file: Express.Multer.File) {
+  update(
+    @Param('id') id: string,
+    @Body(new ZodValidationPipe(UpdateGallerySchema))
+    updateGalleryDto: UpdateGalleryDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     return this.galleryService.update(id, updateGalleryDto, file);
   }
 

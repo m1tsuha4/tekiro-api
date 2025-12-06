@@ -10,6 +10,7 @@ import { TransformResponseInterceptor } from './common/interceptors/transform-re
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { GalleryModule } from './gallery/gallery.module';
+import { InstagramModule } from './instagram/instagram.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { GalleryModule } from './gallery/gallery.module';
     CategoryModule,
     ProductModule,
     GalleryModule,
+    InstagramModule,
   ],
   controllers: [AppController],
   providers: [

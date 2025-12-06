@@ -1,7 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UploadedFiles } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  UploadedFiles,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
-import { CreateProductDto, CreateProductSchema } from './dto/create-product.dto';
-import { UpdateProductDto, UpdateProductSchema } from './dto/update-product.dto';
+import {
+  CreateProductDto,
+  CreateProductSchema,
+} from './dto/create-product.dto';
+import {
+  UpdateProductDto,
+  UpdateProductSchema,
+} from './dto/update-product.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-guard.auth';
 import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe';
@@ -35,7 +51,11 @@ export class ProductController {
       required: ['name', 'description', 'categoryId', 'files'],
     },
   })
-  create(@Body(new ZodValidationPipe(CreateProductSchema)) createProductDto: CreateProductDto, @UploadedFiles() file: Express.Multer.File[]) {
+  create(
+    @Body(new ZodValidationPipe(CreateProductSchema))
+    createProductDto: CreateProductDto,
+    @UploadedFiles() file: Express.Multer.File[],
+  ) {
     return this.productService.create(createProductDto, file);
   }
 
@@ -82,7 +102,12 @@ export class ProductController {
       },
     },
   })
-  update(@Param('id') id: string, @Body(new ZodValidationPipe(UpdateProductSchema)) updateProductDto: UpdateProductDto, @UploadedFiles() file: Express.Multer.File[]) {
+  update(
+    @Param('id') id: string,
+    @Body(new ZodValidationPipe(UpdateProductSchema))
+    updateProductDto: UpdateProductDto,
+    @UploadedFiles() file: Express.Multer.File[],
+  ) {
     return this.productService.update(id, updateProductDto, file);
   }
 
