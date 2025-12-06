@@ -122,6 +122,25 @@ export class ProductService {
     return existingProduct;
   }
 
+  async findRelated(categoryId: string) {
+    const existingProduct = await this.prisma.product.findMany({
+      where: {
+        categoryId,
+        deletedAt: null,
+      },
+      select: {
+        id: true,
+        name: true,
+        images: true,
+      },
+      take: 3,
+    });
+    if (existingProduct.length === 0) {
+      throw new NotFoundException('Product not found');
+    }
+    return existingProduct;
+  }
+
   async update(
     id: string,
     updateProductDto: UpdateProductDto,

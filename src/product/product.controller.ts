@@ -74,6 +74,11 @@ export class ProductController {
     return this.productService.findCategory(categoryId);
   }
 
+  @Get('related/:categoryId')
+  findRelated(@Param('categoryId') categoryId: string) {
+    return this.productService.findRelated(categoryId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productService.findOne(id);
