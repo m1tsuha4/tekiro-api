@@ -228,4 +228,24 @@ export class ProductService {
       },
     });
   }
+
+  async search(query: string) {
+    const existingProduct = await this.prisma.product.findMany({
+      where: {
+        deletedAt: null,
+        name: {
+          contains: query,
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        images: true,
+      },
+    });
+    if (existingProduct.length === 0) {
+      throw new NotFoundException('Product not found');
+    }
+    return existingProduct;
+  }
 }

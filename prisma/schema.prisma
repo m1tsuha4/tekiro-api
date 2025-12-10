@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -34,57 +34,56 @@ model TokenBlacklist {
 }
 
 model Category {
-  id  String   @id @default(cuid())
-  name  String @unique
-  image String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  name      String    @unique
+  image     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  product Product[]
+  product   Product[]
   catalogue Catalogue[]
 }
 
 model Product {
-  id String @id @default(cuid())
-  category Category @relation(fields: [categoryId], references: [id])
-  categoryId String
-  name  String
-  description String @db.Text
-  images String[]
-  storeUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime?
+  id          String    @id @default(cuid())
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  name        String
+  description String    @db.Text
+  images      String[]
+  storeUrl    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
 }
 
 model Gallery {
-  id String @id @default(cuid())
+  id    String  @id @default(cuid())
   title String?
   image String
 }
 
 model Instagram {
-  id String @id @default(cuid())
+  id    String  @id @default(cuid())
   title String?
-  link String @db.Text
+  link  String  @db.Text
 }
 
 model Cordless {
-  id String @id @default(cuid())
-  title String
+  id          String @id @default(cuid())
+  title       String
   description String @db.Text
-  link String
+  link        String
 }
 
 model Catalogue {
-  id String @id @default(cuid())
-  title String?
-  category Category @relation(fields: [categoryId], references: [id])
+  id         String    @id @default(cuid())
+  title      String?
+  category   Category  @relation(fields: [categoryId], references: [id])
   categoryId String
-  file String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime?
+  file       String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
 }
-
