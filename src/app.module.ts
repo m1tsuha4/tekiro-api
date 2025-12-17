@@ -13,6 +13,7 @@ import { GalleryModule } from './gallery/gallery.module';
 import { InstagramModule } from './instagram/instagram.module';
 import { CordlessModule } from './cordless/cordless.module';
 import { CatalogueModule } from './catalogue/catalogue.module';
+import { ArticleModule } from './article/article.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { CatalogueModule } from './catalogue/catalogue.module';
     InstagramModule,
     CordlessModule,
     CatalogueModule,
+    ArticleModule,
   ],
   controllers: [AppController],
   providers: [

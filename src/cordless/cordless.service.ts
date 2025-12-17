@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CordlessService {
-  constructor(private readonly prisma: PrismaService){}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createCordlessDto: CreateCordlessDto) {
     return await this.prisma.cordless.create({ data: createCordlessDto });
@@ -20,7 +20,9 @@ export class CordlessService {
   }
 
   async findOne(id: string) {
-    const existingCordless = await this.prisma.cordless.findUnique({ where: { id } });
+    const existingCordless = await this.prisma.cordless.findUnique({
+      where: { id },
+    });
     if (!existingCordless) {
       throw new Error('Cordless not found');
     }
@@ -28,15 +30,22 @@ export class CordlessService {
   }
 
   async update(id: string, updateCordlessDto: UpdateCordlessDto) {
-    const existingCordless = await this.prisma.cordless.findUnique({ where: { id } });
+    const existingCordless = await this.prisma.cordless.findUnique({
+      where: { id },
+    });
     if (!existingCordless) {
       throw new Error('Cordless not found');
     }
-    return await this.prisma.cordless.update({ where: { id }, data: updateCordlessDto });
+    return await this.prisma.cordless.update({
+      where: { id },
+      data: updateCordlessDto,
+    });
   }
 
   async remove(id: string) {
-    const existingCordless = await this.prisma.cordless.findUnique({ where: { id } });
+    const existingCordless = await this.prisma.cordless.findUnique({
+      where: { id },
+    });
     if (!existingCordless) {
       throw new Error('Cordless not found');
     }

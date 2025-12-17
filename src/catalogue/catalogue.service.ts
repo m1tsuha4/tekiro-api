@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCatalogueDto } from './dto/create-catalogue.dto';
 import { UpdateCatalogueDto } from './dto/update-catalogue.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -8,10 +12,13 @@ import { existsSync, unlinkSync } from 'fs';
 
 @Injectable()
 export class CatalogueService {
-  constructor(private readonly prisma: PrismaService){}
-  
-  async create(createCatalogueDto: CreateCatalogueDto, file?: Express.Multer.File) {
-    if(!file){
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(
+    createCatalogueDto: CreateCatalogueDto,
+    file?: Express.Multer.File,
+  ) {
+    if (!file) {
       throw new BadRequestException('File is Required');
     }
     const fileUrl = `/uploads/catalogue/${file.filename}`;
@@ -39,7 +46,7 @@ export class CatalogueService {
             name: true,
             image: true,
           },
-        }
+        },
       },
     });
     if (existingCatalogue.length === 0) {
@@ -65,7 +72,7 @@ export class CatalogueService {
             name: true,
             image: true,
           },
-        }
+        },
       },
     });
     if (!existingCatalogue) {
@@ -74,7 +81,11 @@ export class CatalogueService {
     return existingCatalogue;
   }
 
-  async update(id: string, updateCatalogueDto: UpdateCatalogueDto, file?: Express.Multer.File) {
+  async update(
+    id: string,
+    updateCatalogueDto: UpdateCatalogueDto,
+    file?: Express.Multer.File,
+  ) {
     const existingCatalogue = await this.prisma.catalogue.findUnique({
       where: {
         id,
@@ -84,10 +95,7 @@ export class CatalogueService {
     if (!existingCatalogue) {
       throw new NotFoundException('Catalogue not found');
     }
-    const {
-      file: _ignoreFileField,
-      ...rest
-    } = updateCatalogueDto as any;
+    const { file: _ignoreFileField, ...rest } = updateCatalogueDto as any;
     const updateData: any = { ...rest };
     const uploadRoot = join(process.cwd(), 'uploads');
     if (file) {

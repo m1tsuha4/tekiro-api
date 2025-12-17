@@ -1,7 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { CordlessService } from './cordless.service';
-import { CreateCordlessDto, CreateCordlessSchema } from './dto/create-cordless.dto';
-import { UpdateCordlessDto, UpdateCordlessSchema } from './dto/update-cordless.dto';
+import {
+  CreateCordlessDto,
+  CreateCordlessSchema,
+} from './dto/create-cordless.dto';
+import {
+  UpdateCordlessDto,
+  UpdateCordlessSchema,
+} from './dto/update-cordless.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-guard.auth';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe';
@@ -13,7 +28,10 @@ export class CordlessController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Post()
-  create(@Body(new ZodValidationPipe(CreateCordlessSchema)) createCordlessDto: CreateCordlessDto) {
+  create(
+    @Body(new ZodValidationPipe(CreateCordlessSchema))
+    createCordlessDto: CreateCordlessDto,
+  ) {
     return this.cordlessService.create(createCordlessDto);
   }
 
@@ -30,7 +48,11 @@ export class CordlessController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Patch(':id')
-  update(@Param('id') id: string, @Body(new ZodValidationPipe(UpdateCordlessSchema)) updateCordlessDto: UpdateCordlessDto) {
+  update(
+    @Param('id') id: string,
+    @Body(new ZodValidationPipe(UpdateCordlessSchema))
+    updateCordlessDto: UpdateCordlessDto,
+  ) {
     return this.cordlessService.update(id, updateCordlessDto);
   }
 

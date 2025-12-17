@@ -1,7 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UploadedFile } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  UploadedFile,
+} from '@nestjs/common';
 import { CatalogueService } from './catalogue.service';
-import { CreateCatalogueDto, CreateCatalogueSchema } from './dto/create-catalogue.dto';
-import { UpdateCatalogueDto, UpdateCatalogueSchema } from './dto/update-catalogue.dto';
+import {
+  CreateCatalogueDto,
+  CreateCatalogueSchema,
+} from './dto/create-catalogue.dto';
+import {
+  UpdateCatalogueDto,
+  UpdateCatalogueSchema,
+} from './dto/update-catalogue.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-guard.auth';
 import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { UploadPdfInterceptor } from 'src/common/interceptors/multer-config.interceptors';
@@ -29,7 +45,11 @@ export class CatalogueController {
       },
     },
   })
-  create(@Body(new ZodValidationPipe(CreateCatalogueSchema)) createCatalogueDto: CreateCatalogueDto, @UploadedFile() file: Express.Multer.File) {
+  create(
+    @Body(new ZodValidationPipe(CreateCatalogueSchema))
+    createCatalogueDto: CreateCatalogueDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     return this.catalogueService.create(createCatalogueDto, file);
   }
 
@@ -42,7 +62,6 @@ export class CatalogueController {
   findOne(@Param('id') id: string) {
     return this.catalogueService.findOne(id);
   }
-
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -62,7 +81,12 @@ export class CatalogueController {
       },
     },
   })
-  update(@Param('id') id: string, @Body(new ZodValidationPipe(UpdateCatalogueSchema)) updateCatalogueDto: UpdateCatalogueDto, @UploadedFile() file: Express.Multer.File) {
+  update(
+    @Param('id') id: string,
+    @Body(new ZodValidationPipe(UpdateCatalogueSchema))
+    updateCatalogueDto: UpdateCatalogueDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     return this.catalogueService.update(id, updateCatalogueDto, file);
   }
 

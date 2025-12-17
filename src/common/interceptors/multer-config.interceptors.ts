@@ -73,7 +73,10 @@ export function UploadImagesInterceptor(folderName: string, maxCount = 3) {
   );
 }
 
-export function UploadPdfInterceptor(folderName: string = 'pdfs', maxSizeBytes = 10 * 1024 * 1024) {
+export function UploadPdfInterceptor(
+  folderName: string = 'pdfs',
+  maxSizeBytes = 10 * 1024 * 1024,
+) {
   const folderPath = `./uploads/${folderName}`;
   ensureDirExists(folderPath);
 
@@ -89,7 +92,10 @@ export function UploadPdfInterceptor(folderName: string = 'pdfs', maxSizeBytes =
       }),
       fileFilter: (_req, file, cb) => {
         if (file.mimetype !== 'application/pdf') {
-          return cb(new BadRequestException('Only PDF files are allowed!'), false);
+          return cb(
+            new BadRequestException('Only PDF files are allowed!'),
+            false,
+          );
         }
         cb(null, true);
       },
