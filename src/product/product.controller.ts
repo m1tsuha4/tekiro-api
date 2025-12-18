@@ -69,7 +69,7 @@ export class ProductController {
     return this.productService.findLatest();
   }
 
-  @Get(':categoryId')
+  @Get('category/:categoryId')
   findCategory(@Param('categoryId') categoryId: string) {
     return this.productService.findCategory(categoryId);
   }
