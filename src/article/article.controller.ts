@@ -162,8 +162,10 @@ export class ArticleController {
         metaTags: {
           type: 'object',
           example: {
-            title: 'Tekiro Tools Raih Penghargaan TOP BRAND ke-11 Kali Secara Berturut-turut, Pertegas Posisi Sebagai Merek Perkakas Paling Dipercaya di Indonesia',
-            description: 'Tekiro Tools Raih Penghargaan TOP BRAND ke-11 Kali Secara Berturut-turut',
+            title:
+              'Tekiro Tools Raih Penghargaan TOP BRAND ke-11 Kali Secara Berturut-turut, Pertegas Posisi Sebagai Merek Perkakas Paling Dipercaya di Indonesia',
+            description:
+              'Tekiro Tools Raih Penghargaan TOP BRAND ke-11 Kali Secara Berturut-turut',
             keywords: 'Tools',
           },
         },

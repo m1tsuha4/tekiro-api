@@ -169,10 +169,10 @@ export class ArticleService {
           slug,
           id: { not: id },
           deletedAt: null,
-        }
+        },
       });
 
-      if(slugExist) {
+      if (slugExist) {
         throw new BadRequestException('Slug already exists');
       }
     }
@@ -193,7 +193,7 @@ export class ArticleService {
       }
     }
     updateData.metaTags = metaTags;
-    
+
     if (file) {
       const primaryImage = `/uploads/article/${file.filename}`;
       updateData.primaryImage = primaryImage;

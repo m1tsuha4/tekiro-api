@@ -10,7 +10,10 @@ export const CreateArticleSchema = z.object({
   seoTitle: z.string().optional(),
   seoDescription: z.string().optional(),
   seoKeywords: z.string().optional(),
-  metaTags: z.string().optional().transform((value) => (value ? JSON.parse(value) : undefined)),
+  metaTags: z
+    .string()
+    .optional()
+    .transform((value) => (value ? JSON.parse(value) : undefined)),
   publishedAt: z.coerce.date().optional(),
 });
 

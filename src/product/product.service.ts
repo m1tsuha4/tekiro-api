@@ -235,6 +235,7 @@ export class ProductService {
         deletedAt: null,
         name: {
           contains: query,
+          mode: 'insensitive',
         },
       },
       select: {
