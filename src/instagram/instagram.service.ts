@@ -9,7 +9,10 @@ import { existsSync, unlinkSync } from 'node:fs';
 export class InstagramService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createInstagramDto: CreateInstagramDto, image?: Express.Multer.File) {
+  async create(
+    createInstagramDto: CreateInstagramDto,
+    image?: Express.Multer.File,
+  ) {
     return this.prisma.instagram.create({
       data: {
         ...createInstagramDto,
@@ -38,7 +41,11 @@ export class InstagramService {
     return existingInstagram;
   }
 
-  async update(id: string, updateInstagramDto: UpdateInstagramDto, image?: Express.Multer.File) {
+  async update(
+    id: string,
+    updateInstagramDto: UpdateInstagramDto,
+    image?: Express.Multer.File,
+  ) {
     const existingInstagram = await this.findOne(id);
 
     const uploadRoot = join(process.cwd(), 'uploads', 'instagram');
@@ -55,7 +62,9 @@ export class InstagramService {
       },
       data: {
         ...updateInstagramDto,
-        image: image ? `/uploads/instagram/${image.filename}` : existingInstagram.image,
+        image: image
+          ? `/uploads/instagram/${image.filename}`
+          : existingInstagram.image,
       },
     });
   }
