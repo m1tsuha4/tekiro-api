@@ -68,6 +68,7 @@ model Instagram {
   id    String  @id @default(cuid())
   title String?
   link  String  @db.Text
+  image String?
 }
 
 model Cordless {

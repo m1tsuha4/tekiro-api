@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { InstagramService } from './instagram.service';
 import {
@@ -22,6 +23,7 @@ import { JwtAuthGuard } from 'src/auth/guard/jwt-guard.auth';
 import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { UploadImageInterceptor } from 'src/common/interceptors/multer-config.interceptors';
 
 @Controller('instagram')
 export class InstagramController {
@@ -31,21 +33,23 @@ export class InstagramController {
   @ApiBearerAuth()
   @Post()
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(AnyFilesInterceptor())
+  @UploadImageInterceptor('instagram')
   @ApiBody({
     schema: {
       type: 'object',
       properties: {
-        title: { type: 'string' },
-        link: { type: 'string' },
+        title: { type: 'string', example: 'Instagram Caption' },
+        link: { type: 'string', example: 'https://www.instagram.com/' },
+        file: { type: 'string', format: 'binary' },
       },
     },
   })
   create(
     @Body(new ZodValidationPipe(CreateInstagramSchema))
     createInstagramDto: CreateInstagramDto,
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.instagramService.create(createInstagramDto);
+    return this.instagramService.create(createInstagramDto, file);
   }
 
   @Get()
@@ -62,13 +66,14 @@ export class InstagramController {
   @ApiBearerAuth()
   @Patch(':id')
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(AnyFilesInterceptor())
+  @UploadImageInterceptor('instagram')
   @ApiBody({
     schema: {
       type: 'object',
       properties: {
-        title: { type: 'string' },
-        link: { type: 'string' },
+        title: { type: 'string', example: 'Instagram Caption' },
+        link: { type: 'string', example: 'https://www.instagram.com/' },
+        file: { type: 'string', format: 'binary' },
       },
     },
   })
@@ -76,8 +81,9 @@ export class InstagramController {
     @Param('id') id: string,
     @Body(new ZodValidationPipe(UpdateInstagramSchema))
     updateInstagramDto: UpdateInstagramDto,
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.instagramService.update(id, updateInstagramDto);
+    return this.instagramService.update(id, updateInstagramDto, file);
   }
 
   @UseGuards(JwtAuthGuard)
