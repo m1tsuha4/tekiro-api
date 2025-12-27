@@ -20,7 +20,7 @@ export class ProductService {
     if (!file || file.length === 0) {
       throw new BadRequestException('Atleast One Image is Required');
     }
-    const images = file.map((file) => `/uploads/product/${file.filename}`);
+    const images = file.map((file) => `/uploads/products/${file.filename}`);
     return this.prisma.product.create({
       data: {
         ...createProductDto,
@@ -167,14 +167,14 @@ export class ProductService {
 
     if (files && files.length > 0) {
       const newImages = files.map(
-        (file) => `/uploads/product/${file.filename}`,
+        (file) => `/uploads/products/${file.filename}`,
       );
       updateData.images = newImages;
 
       if (existingProduct.images && existingProduct.images.length > 0) {
         for (const img of existingProduct.images) {
           const filename = basename(img);
-          const oldFilePath = join(uploadRoot, 'product', filename);
+          const oldFilePath = join(uploadRoot, 'products', filename);
           try {
             if (existsSync(oldFilePath)) {
               unlinkSync(oldFilePath);
@@ -208,7 +208,7 @@ export class ProductService {
     if (existingProduct.images && existingProduct.images.length > 0) {
       for (const img of existingProduct.images) {
         const filename = basename(img);
-        const oldFilePath = join(uploadRoot, 'product', filename);
+        const oldFilePath = join(uploadRoot, 'products', filename);
         try {
           if (existsSync(oldFilePath)) {
             unlinkSync(oldFilePath);
