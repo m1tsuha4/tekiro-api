@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCordlessDto } from './dto/create-cordless.dto';
 import { UpdateCordlessDto } from './dto/update-cordless.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -14,7 +14,7 @@ export class CordlessService {
   async findAll() {
     const existingCordless = await this.prisma.cordless.findMany();
     if (existingCordless.length === 0) {
-      throw new Error('Cordless not found');
+      throw new NotFoundException('Cordless not found');
     }
     return existingCordless;
   }
@@ -24,7 +24,7 @@ export class CordlessService {
       where: { id },
     });
     if (!existingCordless) {
-      throw new Error('Cordless not found');
+      throw new NotFoundException('Cordless not found');
     }
     return existingCordless;
   }
@@ -34,7 +34,7 @@ export class CordlessService {
       where: { id },
     });
     if (!existingCordless) {
-      throw new Error('Cordless not found');
+      throw new NotFoundException('Cordless not found');
     }
     return await this.prisma.cordless.update({
       where: { id },
@@ -47,7 +47,7 @@ export class CordlessService {
       where: { id },
     });
     if (!existingCordless) {
-      throw new Error('Cordless not found');
+      throw new NotFoundException('Cordless not found');
     }
     return await this.prisma.cordless.delete({ where: { id } });
   }
