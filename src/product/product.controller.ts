@@ -109,6 +109,11 @@ export class ProductController {
             format: 'binary',
           },
         },
+        imagesToDelete: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Array of image URLs to delete (e.g., ["/uploads/products/image1.jpg"])',
+        },
       },
     },
   })

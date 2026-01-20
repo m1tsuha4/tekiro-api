@@ -160,31 +160,48 @@ export class ProductService {
     const {
       file: _ignoreFileField,
       files: _ignoreFilesField,
+      imagesToDelete: _ignoreImagesToDelete,
       ...rest
     } = updateProductDto as any;
     const updateData: any = { ...rest };
     const uploadRoot = join(process.cwd(), 'uploads');
+    let updatedImages = existingProduct.images ? [...existingProduct.images] : [];
 
+    // Handle selective image deletion
+    const imagesToDelete = (updateProductDto as any).imagesToDelete || [];
+    if (imagesToDelete.length > 0) {
+      for (const imageToDelete of imagesToDelete) {
+        const filename = basename(imageToDelete);
+        const oldFilePath = join(uploadRoot, 'products', filename);
+        try {
+          if (existsSync(oldFilePath)) {
+            unlinkSync(oldFilePath);
+          }
+          // Remove from images array
+          updatedImages = updatedImages.filter(
+            (img) => img !== imageToDelete,
+          );
+        } catch (error) {
+          console.error('Error deleting image file:', error);
+          throw new BadRequestException(
+            `Failed to delete image: ${filename}`,
+          );
+        }
+      }
+    }
+
+    // Handle new image uploads - append to existing images
     if (files && files.length > 0) {
       const newImages = files.map(
         (file) => `/uploads/products/${file.filename}`,
       );
-      updateData.images = newImages;
-
-      if (existingProduct.images && existingProduct.images.length > 0) {
-        for (const img of existingProduct.images) {
-          const filename = basename(img);
-          const oldFilePath = join(uploadRoot, 'products', filename);
-          try {
-            if (existsSync(oldFilePath)) {
-              unlinkSync(oldFilePath);
-            }
-          } catch (error) {
-            console.error('Error deleting old file:', error);
-          }
-        }
-      }
+      updatedImages = [...updatedImages, ...newImages];
     }
+
+    if (updatedImages.length > 0) {
+      updateData.images = updatedImages;
+    }
+
     return this.prisma.product.update({
       where: {
         id,
