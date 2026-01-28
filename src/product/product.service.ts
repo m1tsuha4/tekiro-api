@@ -113,8 +113,7 @@ export class ProductService {
         id: true,
         name: true,
         images: true,
-      },
-      take: 10,
+      }
     });
     if (existingProduct.length === 0) {
       throw new NotFoundException('Product not found');
