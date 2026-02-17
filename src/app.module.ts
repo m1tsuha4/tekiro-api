@@ -14,6 +14,7 @@ import { InstagramModule } from './instagram/instagram.module';
 import { CordlessModule } from './cordless/cordless.module';
 import { CatalogueModule } from './catalogue/catalogue.module';
 import { ArticleModule } from './article/article.module';
+import { ContactModule } from './contact/contact.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ArticleModule } from './article/article.module';
     CordlessModule,
     CatalogueModule,
     ArticleModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [
@@ -41,4 +43,4 @@ import { ArticleModule } from './article/article.module';
     AppService,
   ],
 })
-export class AppModule {}
+export class AppModule { }
