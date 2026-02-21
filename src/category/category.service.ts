@@ -41,6 +41,9 @@ export class CategoryService {
     const existingCategory = await this.prisma.category.findMany({
       where: {
         deletedAt: null,
+        NOT: {
+          id: 'cmlvva2qz00000ip8ypkzh2gp',
+        },
       },
       select: {
         id: true,
