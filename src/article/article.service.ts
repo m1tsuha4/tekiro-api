@@ -67,6 +67,9 @@ export class ArticleService {
         metaTags: true,
         publishedAt: true,
       },
+      orderBy: {
+        createdAt: 'desc',
+      }
     });
   }
 
